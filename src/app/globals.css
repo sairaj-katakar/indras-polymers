@@ -8993,28 +8993,29 @@ a.footer-contact-item:hover {
 
 
 
+
 /* ========================================
    HOME FEATURED PRODUCTS CAROUSEL
 ======================================== */
 
 .home-featured-carousel {
-  padding: 85px 0;
+  padding: 60px 0;
   background: #f5f8fb;
 }
 
 .home-featured-container {
-  width: min(1180px, 90%);
+  width: min(900px, 88%);
   margin: 0 auto;
 }
 
 .home-featured-heading {
   text-align: center;
-  margin-bottom: 38px;
+  margin-bottom: 28px;
 }
 
 .home-featured-heading span {
   display: inline-block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: #079fc9;
   font-size: 12px;
   font-weight: 800;
@@ -9022,30 +9023,48 @@ a.footer-contact-item:hover {
 }
 
 .home-featured-heading h2 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: #09243d;
-  font-size: clamp(27px, 4vw, 40px);
+  font-size: clamp(25px, 4vw, 36px);
   font-weight: 800;
 }
 
 .home-featured-heading p {
-  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
   color: #64748b;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
 .home-featured-carousel .carousel-viewport {
-  box-shadow: 0 15px 40px rgba(7, 26, 43, 0.12);
+  box-shadow: 0 12px 32px rgba(7, 26, 43, 0.12);
+  border-radius: 12px;
 }
 
+/* Tablet */
+@media (max-width: 900px) {
+  .home-featured-container {
+    width: 90%;
+  }
+}
+
+/* Mobile */
 @media (max-width: 600px) {
   .home-featured-carousel {
-    padding: 55px 0;
+    padding: 40px 0;
+  }
+
+  .home-featured-container {
+    width: 92%;
   }
 
   .home-featured-heading {
-    margin-bottom: 25px;
+    margin-bottom: 22px;
+  }
+
+  .home-featured-heading h2 {
+    font-size: 26px;
   }
 
   .home-featured-heading p {

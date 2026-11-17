@@ -10,7 +10,7 @@ export default function Carousel({
   interval = 4000,
   showArrows = true,
   showDots = true,
-  showPlayPause = true,
+  showPlayPause = false,
   loop = true,
   aspectRatio = "16 / 9",
   className = "",
@@ -24,6 +24,8 @@ export default function Carousel({
   const totalSlides = items.length;
 
   const nextSlide = useCallback(() => {
+    if (totalSlides <= 1) return;
+
     setCurrentIndex((previous) => {
       if (previous >= totalSlides - 1) {
         return loop ? 0 : previous;
@@ -33,6 +35,8 @@ export default function Carousel({
   }, [totalSlides, loop]);
 
   const previousSlide = useCallback(() => {
+    if (totalSlides <= 1) return;
+
     setCurrentIndex((previous) => {
       if (previous <= 0) {
         return loop ? totalSlides - 1 : previous;
@@ -49,9 +53,7 @@ export default function Carousel({
   useEffect(() => {
     if (!autoPlay || isPaused || totalSlides <= 1) return;
 
-    timerRef.current = setInterval(() => {
-      nextSlide();
-    }, interval);
+    timerRef.current = setInterval(nextSlide, interval);
 
     return () => clearInterval(timerRef.current);
   }, [autoPlay, isPaused, interval, nextSlide, totalSlides]);
@@ -62,7 +64,7 @@ export default function Carousel({
     if (event.key === "ArrowLeft") previousSlide();
   };
 
-  // Touch / Swipe support
+  // Touch swipe
   const handleTouchStart = (event) => {
     touchStart.current = event.touches[0].clientX;
   };
@@ -84,9 +86,7 @@ export default function Carousel({
     touchStart.current = null;
   };
 
-  if (!items.length) {
-    return null;
-  }
+  if (!items.length) return null;
 
   return (
     <section
@@ -162,7 +162,7 @@ export default function Carousel({
               onClick={previousSlide}
               aria-label="Previous slide"
             >
-              <ChevronLeft size={25} />
+              <ChevronLeft size={24} />
             </button>
 
             <button
@@ -171,7 +171,7 @@ export default function Carousel({
               onClick={nextSlide}
               aria-label="Next slide"
             >
-              <ChevronRight size={25} />
+              <ChevronRight size={24} />
             </button>
           </>
         )}
@@ -244,6 +244,7 @@ export default function Carousel({
 
         .carousel-image {
           object-fit: cover;
+          object-position: center;
           user-select: none;
         }
 
@@ -253,8 +254,8 @@ export default function Carousel({
           z-index: 3;
           display: grid;
           place-items: center;
-          color: white;
-          background: rgba(5, 22, 40, 0.75);
+          color: #fff;
+          background: rgba(5, 22, 40, 0.78);
           border: 1px solid rgba(255, 255, 255, 0.3);
           cursor: pointer;
           transition: all 0.25s ease;
@@ -293,25 +294,32 @@ export default function Carousel({
 
         .carousel-caption {
           position: absolute;
+          z-index: 2;
           bottom: 0;
           left: 0;
           width: 100%;
-          padding: 50px 28px 25px;
-          color: white;
+          padding: 65px 30px 25px;
+          color: #fff !important;
           background: linear-gradient(
-            transparent,
-            rgba(3, 16, 30, 0.88)
+            to bottom,
+            transparent 0%,
+            rgba(3, 16, 30, 0.35) 35%,
+            rgba(3, 16, 30, 0.92) 100%
           );
           pointer-events: none;
         }
 
         .carousel-caption h3 {
           margin: 0 0 8px;
+          color: #fff !important;
           font-size: clamp(18px, 3vw, 28px);
+          font-weight: 800;
+          line-height: 1.25;
         }
 
         .carousel-caption p {
           margin: 0;
+          color: #eaf4fb !important;
           font-size: 14px;
           line-height: 1.6;
         }
@@ -346,9 +354,34 @@ export default function Carousel({
           outline-offset: 3px;
         }
 
+        /* Tablet */
+        @media (min-width: 601px) and (max-width: 900px) {
+          .carousel-caption {
+            padding: 50px 22px 20px;
+          }
+        }
+
+        /* Mobile */
         @media (max-width: 600px) {
           .carousel-viewport {
-            border-radius: 8px;
+            aspect-ratio: 4 / 3 !important;
+            min-height: 210px;
+            max-height: 280px;
+            border-radius: 9px;
+          }
+
+          .carousel-slide {
+            height: 100%;
+          }
+
+          .carousel-image,
+          .carousel-image-link {
+            width: 100%;
+            height: 100%;
+          }
+
+          .carousel-image {
+            object-fit: cover;
           }
 
           .carousel-arrow {
@@ -357,27 +390,35 @@ export default function Carousel({
           }
 
           .carousel-prev {
-            left: 9px;
+            left: 10px;
           }
 
           .carousel-next {
-            right: 9px;
+            right: 10px;
           }
 
           .carousel-caption {
-            padding: 35px 16px 18px;
+            padding: 55px 16px 17px;
+          }
+
+          .carousel-caption h3 {
+            font-size: 19px;
+            margin-bottom: 5px;
           }
 
           .carousel-caption p {
             font-size: 12px;
+            line-height: 1.45;
+          }
+
+          .carousel-dots {
+            gap: 8px;
+            padding: 13px 0 4px;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .carousel-track {
-            transition: none;
-          }
-
+          .carousel-track,
           .carousel-arrow,
           .carousel-dot {
             transition: none;

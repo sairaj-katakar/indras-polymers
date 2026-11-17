@@ -1,4 +1,3 @@
-
 import ProductsHero from "@/sections/products/ProductsHero";
 import ProductCategories from "@/sections/products/ProductCategories";
 import ProductDetails from "@/sections/products/ProductDetails";
@@ -54,10 +53,9 @@ const productSlides = [
 export default function ProductsPage() {
   return (
     <main>
-      {/* 01 - Products Hero */}
+     
       <ProductsHero />
 
-      {/* 02 - Featured Products Carousel */}
       <section className="products-carousel-section">
         <div className="products-carousel-container">
 
@@ -84,13 +82,10 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* 03 - Product Categories */}
       <ProductCategories />
 
-      {/* 04 - Product Details */}
       <ProductDetails />
 
-      {/* 05 - Products CTA */}
       <ProductsCTA />
     </main>
   );

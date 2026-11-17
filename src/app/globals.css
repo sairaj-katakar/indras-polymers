@@ -313,10 +313,6 @@ p {
   }
 }
 
-
-
-
-
 /* =====================================
    INDRAS POLYMERS - HEADER & NAVBAR
 ===================================== */
@@ -616,8 +612,6 @@ p {
     letter-spacing: 3px;
   }
 }
-
-
 
 /* =====================================
    INDRAS POLYMERS - HERO SECTION
@@ -973,10 +967,6 @@ p {
     font-size: 9px;
   }
 }
-
-
-
-
 
 /* =====================================
    ABOUT SECTION
@@ -1334,12 +1324,8 @@ p {
   }
 }
 
-
-
-
-
 /* =====================================
-   WHY CHOOSE US SECTION
+   WHY CHOOSE US - RESPONSIVE CAROUSEL
 ===================================== */
 
 .why-section {
@@ -1352,6 +1338,8 @@ p {
   );
   overflow: hidden;
 }
+
+/* Section Heading */
 
 .why-heading {
   max-width: 650px;
@@ -1376,27 +1364,55 @@ p {
   line-height: 1.8;
 }
 
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+/* Carousel Layout */
+
+.why-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 35px;
 }
 
-.why-card {
+.why-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.why-carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.why-carousel-slide {
+  flex: 0 0 33.333333%;
+  min-width: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Individual Cards */
+
+.why-carousel-slide .why-card {
   position: relative;
-  padding: 30px 24px;
+  height: 100%;
   min-height: 245px;
-  background: white;
+  padding: 30px 24px;
+  background: #fff;
   border: 1px solid #e2edf4;
   border-radius: 15px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.3s ease;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-.why-card:hover {
+.why-carousel-slide .why-card:hover {
   box-shadow: var(--shadow-lg);
 }
+
+/* Card Top */
 
 .why-card-top {
   display: flex;
@@ -1405,6 +1421,8 @@ p {
   margin-bottom: 27px;
 }
 
+/* Icon */
+
 .why-icon {
   width: 54px;
   height: 54px;
@@ -1412,7 +1430,7 @@ p {
   place-items: center;
   border-radius: 14px;
   color: var(--color-primary);
-  background: rgba(17,184,232,0.11);
+  background: rgba(17, 184, 232, 0.11);
   transition: var(--transition-normal);
 }
 
@@ -1422,23 +1440,30 @@ p {
   transform: rotate(-5deg);
 }
 
+/* Number */
+
 .why-number {
   color: #d8e8f1;
   font-size: 27px;
   font-weight: 800;
 }
 
-.why-card h3 {
+/* Card Content */
+
+.why-carousel-slide .why-card h3 {
   color: var(--color-dark);
   font-size: 17px;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
 }
 
-.why-card > p {
+.why-carousel-slide .why-card > p {
   color: var(--color-text);
   font-size: 13px;
   line-height: 1.8;
+  margin: 0;
 }
+
+/* Bottom Hover Line */
 
 .why-card-line {
   position: absolute;
@@ -1454,39 +1479,159 @@ p {
   width: 100%;
 }
 
-/* TABLET */
+/* Carousel Controls */
+
+.why-carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.why-carousel-arrow {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d6e2eb;
+  border-radius: 50%;
+  background: #fff;
+  color: #09243d;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.why-carousel-arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.why-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.why-carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  background: #bdcbd5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.why-carousel-dot.active {
+  width: 25px;
+  background: #11b8e8;
+}
+
+/* =====================================
+   TABLET RESPONSIVE
+===================================== */
 
 @media (max-width: 992px) {
-  .why-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .why-section {
+    padding: 75px 0;
+  }
+
+  .why-carousel-slide {
+    flex-basis: 50%;
+  }
+
+  .why-carousel-slide .why-card {
+    min-height: 235px;
   }
 }
 
-/* MOBILE */
+/* =====================================
+   MOBILE RESPONSIVE
+===================================== */
 
 @media (max-width: 600px) {
   .why-section {
-    padding: 65px 0;
+    padding: 60px 0;
   }
 
   .why-heading {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
-  .why-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
+  .why-heading h2 {
+    font-size: 32px;
   }
 
-  .why-card {
-    min-height: auto;
-    padding: 24px;
+  .why-heading > p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .why-carousel-wrapper {
+    margin-top: 20px;
+  }
+
+  .why-carousel-slide {
+    flex-basis: 100%;
+    padding: 8px 4px 15px;
+  }
+
+  .why-carousel-slide .why-card {
+    min-height: 210px;
+    padding: 25px 22px;
+  }
+
+  .why-card-top {
+    margin-bottom: 22px;
+  }
+
+  .why-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .why-number {
+    font-size: 24px;
+  }
+
+  .why-carousel-slide .why-card h3 {
+    font-size: 17px;
+  }
+
+  .why-carousel-slide .why-card > p {
+    font-size: 13px;
+  }
+
+  .why-carousel-controls {
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .why-carousel-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .why-carousel-dots {
+    gap: 7px;
   }
 }
 
+/* Reduced Motion Accessibility */
 
-
-
+@media (prefers-reduced-motion: reduce) {
+  .why-carousel-track,
+  .why-carousel-arrow,
+  .why-carousel-dot,
+  .why-icon,
+  .why-card-line {
+    transition: none;
+  }
+}
 
 /* =========================================
    INDRAS POLYMERS - PRODUCTS SHOWCASE
@@ -1936,9 +2081,6 @@ p {
   }
 }
 
-
-
-
 /* =====================================
    GET A QUOTE PAGE
 ===================================== */
@@ -2285,13 +2427,8 @@ p {
   }
 }
 
-
-
-
-
-
 /* ==========================================
-   TASK 9 - INFRASTRUCTURE SHOWCASE
+  INFRASTRUCTURE SHOWCASE
 ========================================== */
 
 .infra-section {
@@ -3336,9 +3473,6 @@ p {
   }
 }
 
-
-
-
 /* ABOUT COMPANY STORY */
 
 .about-story {
@@ -3545,10 +3679,6 @@ p {
   }
 }
 
-
-
-
-
 /* =================================
    COMPANY JOURNEY TIMELINE
 ================================= */
@@ -3744,10 +3874,6 @@ p {
     font-size: 24px;
   }
 }
-
-
-
-
 
 /* =====================================
    PREMIUM MISSION & VISION SECTION
@@ -4258,10 +4384,6 @@ p {
   }
 }
 
-
-
-
-
 /* =====================================
    CORE VALUES SECTION
 ===================================== */
@@ -4448,10 +4570,6 @@ p {
     font-size: 20px;
   }
 }
-
-
-
-
 
 /* =====================================
    LEADERSHIP PRINCIPLES SECTION
@@ -4678,10 +4796,6 @@ p {
     line-height: 1.6;
   }
 }
-
-
-
-
 
 /* =====================================
    ABOUT CTA - INDUSTRIAL HERO DESIGN
@@ -5063,10 +5177,6 @@ p {
   }
 }
 
-
-
-
-
 /* =====================================
    ABOUT HERO SECTION
 ===================================== */
@@ -5375,10 +5485,6 @@ p {
   }
 }
 
-
-
-
-
 /* =====================================
    CONTACT HERO SECTION
 ===================================== */
@@ -5678,9 +5784,6 @@ p {
   }
 }
 
-
-
-
 /* =====================================
    CONTACT INFORMATION SECTION
 ===================================== */
@@ -5884,9 +5987,6 @@ a.contact-info-action:hover {
     margin-bottom: 22px;
   }
 }
-
-
-
 
 /* ================================
    CONTACT ENQUIRY FORM
@@ -6435,8 +6535,6 @@ a.contact-info-action:hover {
 }
 
 
-/*----------------------------------------------------------------------*/
-
 /* =================================
    PRODUCTS HERO SECTION
 ================================= */
@@ -6688,9 +6786,6 @@ a.contact-info-action:hover {
   }
 }
 
-
-
-
 /* =================================
    PRODUCT CATEGORIES SECTION
 ================================= */
@@ -6861,9 +6956,6 @@ a.contact-info-action:hover {
     min-height: auto;
   }
 }
-
-
-
 
 /* =================================
    PRODUCT DETAILS SECTION
@@ -7074,9 +7166,6 @@ a.contact-info-action:hover {
   }
 }
 
-
-
-
 /* =================================
    PRODUCTS CTA SECTION
 ================================= */
@@ -7275,10 +7364,6 @@ a.contact-info-action:hover {
     width: 100%;
   }
 }
-
-
-
-/*-----------------------------------------------------------*/
 
 
 /* =================================
@@ -8061,9 +8146,6 @@ a.contact-info-action:hover {
   }
 }
 
-
-
-
 /* =================================
    STORAGE & MATERIAL HANDLING
 ================================= */
@@ -8350,9 +8432,6 @@ a.contact-info-action:hover {
   }
 }
 
-
-
-
 /* ========================================
    INFRASTRUCTURE CTA
 ======================================== */
@@ -8522,8 +8601,6 @@ a.contact-info-action:hover {
   }
 }
 
-
-/*-----------------------------*/
 
 /* ========================================
    NAVBAR FINAL POLISH
@@ -8989,11 +9066,6 @@ a.footer-contact-item:hover {
   }
 }
 
-
-
-
-
-
 /* ========================================
    HOME FEATURED PRODUCTS CAROUSEL
 ======================================== */
@@ -9268,6 +9340,3 @@ a.footer-contact-item:hover {
     font-size: 13px;
   }
 }
-
-
-

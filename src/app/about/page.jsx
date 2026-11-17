@@ -1,4 +1,3 @@
-
 import CoreValues from "@/sections/about/CoreValues";
 import VisionMission from "@/sections/about/VisionMission";
 import CompanyJourney from "@/sections/about/CompanyJourney";
@@ -45,13 +44,10 @@ const companySlides = [
 export default function About() {
   return (
     <main>
-      {/* 01 - About Hero */}
+      
       <AboutHero />
 
-      {/* 02 - Company Story */}
       <CompanyStory />
-
-      {/* 03 - Company Image Carousel */}
       <section className="about-carousel-section">
         <div className="about-carousel-container">
           <div className="about-carousel-heading">
@@ -76,19 +72,15 @@ export default function About() {
         </div>
       </section>
 
-      {/* 04 - Company Journey */}
+      
       <CompanyJourney />
-
-      {/* 05 - Vision & Mission */}
+ 
       <VisionMission />
-
-      {/* 06 - Core Values */}
+ 
       <CoreValues />
-
-      {/* 07 - Leadership Principles */}
+      
       <LeadershipPrinciples />
 
-      {/* 08 - About CTA */}
       <AboutCTA />
     </main>
   );

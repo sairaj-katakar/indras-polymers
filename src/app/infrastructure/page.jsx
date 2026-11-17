@@ -1,4 +1,3 @@
-
 import InfrastructureHero from "@/sections/infrastructure/InfrastructureHero";
 import FacilityOverview from "@/sections/infrastructure/FacilityOverview";
 import WarehouseGallery from "@/sections/infrastructure/WarehouseGallery";
@@ -43,13 +42,11 @@ const infrastructureSlides = [
 export default function InfrastructurePage() {
   return (
     <main>
-      {/* 01 - Infrastructure Hero */}
+      
       <InfrastructureHero />
 
-      {/* 02 - Facility Overview */}
       <FacilityOverview />
 
-      {/* 03 - Infrastructure Carousel */}
       <section className="infrastructure-carousel-section">
         <div className="infrastructure-carousel-container">
 
@@ -76,13 +73,10 @@ export default function InfrastructurePage() {
         </div>
       </section>
 
-      {/* 04 - Warehouse Gallery */}
       <WarehouseGallery />
 
-      {/* 05 - Storage & Handling */}
       <StorageHandling />
 
-      {/* 06 - Infrastructure CTA */}
       <InfrastructureCTA />
     </main>
   );

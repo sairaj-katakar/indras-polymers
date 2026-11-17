@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Building2, Boxes, Warehouse } from "lucide-react";

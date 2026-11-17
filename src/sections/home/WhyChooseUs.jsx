@@ -1,6 +1,6 @@
-
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 import {
@@ -8,7 +8,8 @@ import {
   Layers3,
   Truck,
   Headset,
-  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const reasons = [
@@ -43,6 +44,82 @@ const reasons = [
 ];
 
 export default function WhyChooseUs() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
+  const touchStart = useRef(null);
+
+  const maxIndex = Math.max(0, reasons.length - visibleCount);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      if (window.innerWidth <= 600) {
+        setVisibleCount(1);
+      } else if (window.innerWidth <= 900) {
+        setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
+      }
+    };
+
+    updateVisibleCount();
+
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => {
+      window.removeEventListener("resize", updateVisibleCount);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCurrentIndex((previous) => Math.min(previous, maxIndex));
+  }, [maxIndex]);
+
+  // Automatic sliding
+  useEffect(() => {
+    if (maxIndex === 0) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((previous) =>
+        previous >= maxIndex ? 0 : previous + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [maxIndex]);
+
+  const nextSlide = () => {
+    setCurrentIndex((previous) =>
+      previous >= maxIndex ? 0 : previous + 1
+    );
+  };
+
+  const previousSlide = () => {
+    setCurrentIndex((previous) =>
+      previous <= 0 ? maxIndex : previous - 1
+    );
+  };
+
+  const handleTouchStart = (event) => {
+    touchStart.current = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStart.current === null) return;
+
+    const touchEnd = event.changedTouches[0].clientX;
+    const difference = touchStart.current - touchEnd;
+
+    if (Math.abs(difference) > 50) {
+      if (difference > 0) {
+        nextSlide();
+      } else {
+        previousSlide();
+      }
+    }
+
+    touchStart.current = null;
+  };
+
   return (
     <section className="why-section">
       <div className="container">
@@ -71,47 +148,105 @@ export default function WhyChooseUs() {
           </p>
         </motion.div>
 
-        <div className="why-grid">
+        {/* Why Choose Us Carousel */}
+        <div className="why-carousel-wrapper">
 
-          {reasons.map((reason, index) => {
-            const Icon = reason.icon;
+          <div
+            className="why-carousel-viewport"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="why-carousel-track"
+              style={{
+                transform: `translateX(-${
+                  currentIndex * (100 / visibleCount)
+                }%)`,
+              }}
+            >
+              {reasons.map((reason, index) => {
+                const Icon = reason.icon;
 
-            return (
-              <motion.article
-                className="why-card"
-                key={reason.number}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.55,
-                  delay: index * 0.12,
-                }}
-                whileHover={{ y: -8 }}
-              >
+                return (
+                  <div
+                    className="why-carousel-slide"
+                    key={reason.number}
+                  >
+                    <motion.article
+                      className="why-card"
+                      initial={{ opacity: 0, y: 25 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.5,
+                        delay: index * 0.08,
+                      }}
+                      whileHover={{ y: -6 }}
+                    >
+                      <div className="why-card-top">
+                        <div className="why-icon">
+                          <Icon size={27} strokeWidth={1.8} />
+                        </div>
 
-                <div className="why-card-top">
-                  <div className="why-icon">
-                    <Icon size={27} strokeWidth={1.8} />
+                        <span className="why-number">
+                          {reason.number}
+                        </span>
+                      </div>
+
+                      <h3>{reason.title}</h3>
+
+                      <p>{reason.description}</p>
+
+                      <div className="why-card-line" />
+                    </motion.article>
                   </div>
+                );
+              })}
+            </div>
+          </div>
 
-                  <span className="why-number">
-                    {reason.number}
-                  </span>
-                </div>
+          {/* Carousel Controls */}
+          {maxIndex > 0 && (
+            <div className="why-carousel-controls">
 
-                <h3>{reason.title}</h3>
+              <button
+                type="button"
+                className="why-carousel-arrow"
+                onClick={previousSlide}
+                aria-label="Previous reasons"
+              >
+                <ChevronLeft size={21} />
+              </button>
 
-                <p>{reason.description}</p>
+              <div className="why-carousel-dots">
+                {Array.from({ length: maxIndex + 1 }).map(
+                  (_, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={`why-carousel-dot ${
+                        currentIndex === index ? "active" : ""
+                      }`}
+                      onClick={() => setCurrentIndex(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  )
+                )}
+              </div>
 
-                <div className="why-card-line" />
+              <button
+                type="button"
+                className="why-carousel-arrow"
+                onClick={nextSlide}
+                aria-label="Next reasons"
+              >
+                <ChevronRight size={21} />
+              </button>
 
-              </motion.article>
-            );
-          })}
+            </div>
+          )}
 
         </div>
-
       </div>
     </section>
   );
